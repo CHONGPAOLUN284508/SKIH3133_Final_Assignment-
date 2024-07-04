@@ -1,0 +1,127 @@
+/* CSS styles for the web interface */
+
+/* General styles */
+body {
+    font-family: Arial, sans-serif; /* Set font family for the entire document */
+    background-color: #f4f4f9; /* Light grey background color */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+}
+
+/* Container styles */
+.container {
+    width: 90%; /* Container width set to 90% of the viewport width */
+    margin: auto; /* Center the container */
+    overflow: hidden; /* Prevent overflow */
+}
+
+/* Header styles */
+header {
+    background: #3498db; /* Blue background color */
+    color: #fff; /* White text color */
+    padding-top: 30px; /* Padding at the top */
+    min-height: 70px; /* Minimum height */
+    border-bottom: #2980b9 3px solid; /* Darker blue bottom border */
+    text-align: center; /* Center-align text */
+    border-radius: 10px; /* Rounded corners */
+    margin-bottom: 20px; /* Space below the header */
+}
+
+header h1 {
+    margin: 0; /* Remove default margin */
+    margin-bottom: 10px; /* Margin at the bottom */
+    font-size: 24px; /* Font size */
+    font-weight: bold; /* Bold font */
+}
+
+/* Table container styles */
+.table-container {
+    margin-bottom: 20px; /* Space below the table container */
+    overflow-x: auto; /* Enable horizontal scrolling if needed */
+}
+
+/* Table styles */
+table {
+    width: 100%; /* Full width */
+    border-collapse: collapse; /* Collapse borders */
+    margin: auto; /* Center the table */
+    background: #fff; /* White background */
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle effect */
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden; /* Prevent overflow */
+}
+
+/* Table header styles */
+table thead {
+    background: #3498db; /* Blue background for the header */
+    color: #fff; /* White text color */
+}
+
+table thead th {
+    padding: 10px; /* Padding */
+    text-align: left; /* Left-align text */
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+/* Table row styles */
+table tbody tr:nth-child(even) {
+    background: #f4f4f9; /* Light grey background for even rows */
+}
+
+table tbody tr:hover {
+    background: #e0e0e0; /* Darker grey background on hover */
+}
+
+table tbody td {
+    padding: 10px; /* Padding */
+    text-align: left; /* Left-align text */
+}
+
+/* Adjusting column widths */
+table thead th:nth-child(1), /* Timestamp */
+table tbody td:nth-child(1) {
+    width: 150px; /* Set width for the Timestamp column */
+}
+
+table thead th:nth-child(2), /* Average Temperature */
+table tbody td:nth-child(2),
+table thead th:nth-child(3), /* Average Humidity */
+table tbody td:nth-child(3),
+table thead th:nth-child(4), /* Average Distance */
+table tbody td:nth-child(4),
+table thead th:nth-child(5), /* Average Light */
+table tbody td:nth-child(5),
+table thead th:nth-child(6), /* Min Temperature */
+table tbody td:nth-child(6),
+table thead th:nth-child(7), /* Min Humidity */
+table tbody td:nth-child(7),
+table thead th:nth-child(8), /* Min Distance */
+table tbody td:nth-child(8),
+table thead th:nth-child(9), /* Min Light */
+table tbody td:nth-child(9),
+table thead th:nth-child(10), /* Max Temperature */
+table tbody td:nth-child(10),
+table thead th:nth-child(11), /* Max Humidity */
+table tbody td:nth-child(11),
+table thead th:nth-child(12), /* Max Distance */
+table tbody td:nth-child(12),
+table thead th:nth-child(13), /* Max Light */
+table tbody td:nth-child(13),
+table thead th:nth-child(14), /* Relay Status */
+table tbody td:nth-child(14) {
+    width: 150px; /* Set width for all columns */
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+/* Chart container styles */
+.chart-container {
+    width: 100%; /* Full width */
+    height: 800px; /* Set height for larger display */
+    overflow-x: auto; /* Enable horizontal scrolling if needed */
+}
+
+#sensorChart {
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    min-width: 800px; /* Minimum width */
+}

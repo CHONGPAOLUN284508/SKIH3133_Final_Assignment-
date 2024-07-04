@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Environmental Monitoring System</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            let sensorChart;
+
+            function fetchSensorData() {
+                $.ajax({
+                    url: "fetch_data.php",
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data) {
+                        var tableContent = "";
+                        var timestamps = [];
+                        var avgTemperatures = [];
+                        var avgHumidities = [];
+                        var avgDistances = [];
+                        var avgLightLevels = [];
+                        var minTemperatures = [];
+                        var minHumidities = [];
+                        var minDistances = [];
+                        var minLightLevels = [];
+                        var maxTemperatures = [];
+                        var maxHumidities = [];
+                        var maxDistances = [];
+                        var maxLightLevels = [];
+                        var relays = [];
+
+                        data.reverse().forEach(function(row) {
+                            tableContent += "<tr>";
+                            tableContent += "<td>" + row.timestamp + "</td>";
+                            tableContent += "<td>" + row.avgTemperature + " &deg;C</td>";
+                            tableContent += "<td>" + row.avgHumidity + " %</td>";
+                            tableContent += "<td>" + row.avgDistance + " cm</td>";
+                            tableContent += "<td>" + row.avgLight + " lx</td>";
+                            tableContent += "<td>" + row.minTemperature + " &deg;C</td>";
+                            tableContent += "<td>" + row.minHumidity + " %</td>";
+                            tableContent += "<td>" + row.minDistance + " cm</td>";
+                            tableContent += "<td>" + row.minLight + " lx</td>";
+                            tableContent += "<td>" + row.maxTemperature + " &deg;C</td>";
+                            tableContent += "<td>" + row.maxHumidity + " %</td>";
+                            tableContent += "<td>" + row.maxDistance + " cm</td>";
+                            tableContent += "<td>" + row.maxLight + " lx</td>";
+                            tableContent += "<td>" + row.relay + "</td>";
+                            tableContent += "</tr>";
+
+                            timestamps.push(row.timestamp);
+                            avgTemperatures.push(row.avgTemperature);
+                            avgHumidities.push(row.avgHumidity);
+                            avgDistances.push(row.avgDistance);
+                            avgLightLevels.push(row.avgLight);
+                            minTemperatures.push(row.minTemperature);
+                            minHumidities.push(row.minHumidity);
+                            minDistances.push(row.minDistance);
+                            minLightLevels.push(row.minLight);
+                            maxTemperatures.push(row.maxTemperature);
+                            maxHumidities.push(row.maxHumidity);
+                            maxDistances.push(row.maxDistance);
+                            maxLightLevels.push(row.maxLight);
+                            relays.push(row.relay);
+                        });
+
+                        $("#sensorTable tbody").html(tableContent);
+
+                        if (sensorChart) {
+                            sensorChart.destroy();
+                        }
+
+                        var ctx = document.getElementById('sensorChart').getContext('2d');
+                        sensorChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: timestamps,
+                                datasets: [
+                                    {
+                                        label: 'Average Temperature (°C)',
+                                        data: avgTemperatures,
+                                        borderColor: 'rgba(255, 99, 132, 1)',
+                                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                        fill: false,
+                                    },
+                                    {
+                                        label: 'Average Humidity (%)',
+                                        data: avgHumidities,
+                                        borderColor: 'rgba(54, 162, 235, 1)',
+                                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                        fill: false,
+                                    },
+                                    {
+                                        label: 'Average Distance (cm)',
+                                        data: avgDistances,
+                                        borderColor: 'rgba(75, 192, 192, 1)',
+                                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                        fill: false,
+                                    },
+                                    {
+                                        label: 'Average Light (lx)',
+                                        data: avgLightLevels,
+                                        borderColor: 'rgba(255, 206, 86, 1)',
+                                        backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                                        fill: false,
+                                    }
+                                ]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false, // Ensure the chart does not maintain aspect ratio
+                                scales: {
+                                    x: {
+                                        display: true,
+                                        title: {
+                                            display: true,
+                                            text: 'Timestamp'
+                                        }
+                                    },
+                                    y: {
+                                        display: true,
+                                        title: {
+                                            display: true,
+                                            text: 'Values'
+                                        },
+                                        suggestedMax: 2000,
+                                    }
+                                },
+                                elements: {
+                                    line: {
+                                        tension: 0.4,
+                                    }
+                                },
+                                plugins: {
+                                    zoom: {
+                                        pan: {
+                                            enabled: true,
+                                            mode: 'x',
+                                        },
+                                        zoom: {
+                                            wheel: {
+                                                enabled: true,
+                                            },
+                                            mode: 'x',
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("An error occurred while fetching data: ", error);
+                    }
+                });
+            }
+
+            fetchSensorData();
+            setInterval(fetchSensorData, 5000);
+        });
+
+        // Ensure the canvas size is set correctly after document is ready
+        window.onload = function() {
+            var canvas = document.getElementById('sensorChart');
+            canvas.width = canvas.parentElement.offsetWidth;
+            canvas.height = 600; // Set height to 600px
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Smart Environmental Monitoring and Control System</h1>
+        </header>
+        <div class="table-container">
+            <table id="sensorTable">
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Average Temperature</th>
+                        <th>Average Humidity</th>
+                        <th>Average Distance</th>
+                        <th>Average Light</th>
+                        <th>Min Temperature</th>
+                        <th>Min Humidity</th>
+                        <th>Min Distance</th>
+                        <th>Min Light</th>
+                        <th>Max Temperature</th>
+                        <th>Max Humidity</th>
+                        <th>Max Distance</th>
+                        <th>Max Light</th>
+                        <th>Relay Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div class="chart-container">
+            <canvas id="sensorChart"></canvas>
+        </div>
+    </div>
+</body>
+</html>
