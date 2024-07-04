@@ -51,9 +51,9 @@ This project aims to design and implement an Intelligent Environmental Monitorin
 #### 2.1 Uploading the Code to ESP8266
 1. Open Final_Assignment.ino in the Arduino IDE.
 2. Set your WiFi credentials in the code:
-   const char* ssid = "your_SSID";
-   const char* password = "your_PASSWORD";
-   const char* serverName = "http://your_server_IP/assignment3/store_data.php";
+   - const char* ssid = "your_SSID";
+   - const char* password = "your_PASSWORD";
+   - const char* serverName = "http://your_server_IP/assignment3/store_data.php";
 3. Select the board and port:
    Go to Tools > Board and select NodeMCU 1.0 (ESP-12E Module).
    Go to Tools > Port and select the appropriate COM port.
